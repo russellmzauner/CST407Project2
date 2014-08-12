@@ -9,5 +9,13 @@
     <string name="save_data">Save Data</string>
     <string name="get_photo">Get Photo</string>
     <string name="get_data">Get Data</string>
-
+    <string name="latitude">"Latitude: "</string>
+    <string name="longitude">"Longitude: "</string>
+    <string name="separator">" / "</string>
+    <string name="current_data">You Are Here</string>
+    <string name="user_settings">User Settings Activity</string>
+    <string name="text_location">text_location</string>
+    <string name="fragment_location">this is in fragment_location.xml</string>
+    <string name="fragment_textedit">this is in fragment_textedit.xml</string>
+    <string name="fragment_textview">this is in fragment_textview.xml</string>
 </resources>

@@ -407,9 +407,9 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
-        public static final int action_settings=0x7f070022;
-        public static final int action_takepicture=0x7f070023;
-        public static final int action_viewpicture=0x7f070024;
+        public static final int action_settings=0x7f070023;
+        public static final int action_takepicture=0x7f070024;
+        public static final int action_viewpicture=0x7f070025;
         public static final int book_now=0x7f070010;
         public static final int button_callcamera=0x7f070016;
         public static final int button_getdata=0x7f07001b;
@@ -432,16 +432,17 @@ containing a value of this type.
         public static final int none=0x7f070000;
         public static final int normal=0x7f070001;
         public static final int photo_image=0x7f070018;
+        public static final int placeholderview=0x7f07001f;
         public static final int production=0x7f070007;
         public static final int sandbox=0x7f070008;
         public static final int satellite=0x7f070002;
         public static final int saved_image=0x7f07001c;
-        public static final int saved_location=0x7f07001f;
-        public static final int saved_textview=0x7f070021;
+        public static final int saved_location=0x7f070020;
+        public static final int saved_textview=0x7f070022;
         public static final int selectionDetails=0x7f07000b;
         public static final int strict_sandbox=0x7f070009;
         public static final int terrain=0x7f070003;
-        public static final int text_edit=0x7f070020;
+        public static final int text_edit=0x7f070021;
         public static final int text_location=0x7f070017;
         public static final int wrap_content=0x7f07000d;
     }
@@ -560,10 +561,19 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f05001e;
+        public static final int current_data=0x7f05002b;
         public static final int description=0x7f050024;
+        public static final int fragment_location=0x7f05002e;
+        public static final int fragment_textedit=0x7f05002f;
+        public static final int fragment_textview=0x7f050030;
         public static final int get_data=0x7f050027;
         public static final int get_photo=0x7f050026;
+        public static final int latitude=0x7f050028;
+        public static final int longitude=0x7f050029;
         public static final int save_data=0x7f050025;
+        public static final int separator=0x7f05002a;
+        public static final int text_location=0x7f05002d;
+        public static final int user_settings=0x7f05002c;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

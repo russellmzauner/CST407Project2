@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
     	android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools">
-    
 
     <fragment
         android:id="@+id/fragment_textedit"
@@ -37,7 +36,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/fragment_textedit"
-        android:text="text_location" />
+        android:text="@string/text_location" />
     
     <ImageView 
         android:id="@+id/photo_image"
@@ -46,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/button_callcamera"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_launcher" />
-    
+        android:src="@drawable/ic_launcher" />    
     
 </RelativeLayout>

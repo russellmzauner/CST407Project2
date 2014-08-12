@@ -8,7 +8,6 @@
         android:id="@+id/saved_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="this is in fragment_location.xml" />
-   
+        android:text="@string/fragment_location" />   
  
 </LinearLayout>

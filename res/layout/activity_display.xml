@@ -21,7 +21,6 @@
         class="org.russell.cst407project.LocationFragment"
         android:layout_below="@+id/fragment_textview"
         tools:layout="@layout/fragment_location"/>
-
     
     <Button
         android:id="@+id/button_getdata"
@@ -38,8 +37,6 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/button_getdata"
         android:layout_centerHorizontal="true"
-
-        android:src="@drawable/ic_launcher" />   
-    
+        android:src="@drawable/ic_launcher" />    
     
 </RelativeLayout>

@@ -8,7 +8,7 @@
         android:id="@+id/saved_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="this is in fragment_textview.xml" />
-   
+        android:text="@string/fragment_textview" 
+        android:textAppearance="?android:attr/textAppearanceLarge" />   
  
 </LinearLayout>

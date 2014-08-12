@@ -9,9 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10" 
-        android:hint="this is in fragment_textedit.xml">
-
-        <requestFocus />
+        android:hint="@string/fragment_textedit">
+        <requestFocus />        
     </EditText>
 
 </LinearLayout>

@@ -18,24 +18,36 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /** 
- * MainActivity handles geolocation and map display.
- * 
+ * MainActivity handles GPS listener and map display.
+ * <p>
  * It looks like the GoogleMap class has some methods that may use fewer 
  * programmatic steps to perform the same function.  I will continue
  * to explore them, but this works.
+ * <p>
+ * TODO Get the MapFragment and LocationListener out of MainActivity and into
+ * more easily reusable components
+ * <p>
+ * TODO Remove all debug code from entire application, set with debug tags, 
+ * or whatever is the best method to keep from including debug code from being 
+ * built with released app.
  * 
  * @author Russell Zauner
- * @version 0.1 120724
+ * @version 0.1 120814
  *
  */
 
 public class MainActivity extends Activity implements LocationListener, Listener {
 	
+	//
+	// TODO Investigate if there's a proper convention for prefixing
+	// Intent, Service, et al member objects.  For now, everything gets
+	// an "m".
+	//	
 	private GoogleMap mMap = null;
 	private LocationManager mLocManager = null;
 	private String mMarkerTitle = null;
 	private MarkerOptions mMarker = null;
-	private Intent timerService = null;
+	private Intent mTimerService = null;
 	
 		
     @Override
@@ -44,9 +56,13 @@ public class MainActivity extends Activity implements LocationListener, Listener
         
         setContentView(R.layout.activity_main);
         
-        // start service
-        timerService = new Intent(this, TimerService.class);
-        startService(timerService); 
+        //
+        // Start timer service.  This is preset for now, but 
+        // TODO add in custom settings Activity where user can set
+        // the intervals themselves.
+        //
+        mTimerService = new Intent(this, TimerService.class);
+        startService(mTimerService); 
         
         //
         // This instantiates a GoogleMaps object.  The map can be displayed purely from
@@ -76,23 +92,7 @@ public class MainActivity extends Activity implements LocationListener, Listener
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);       
         
     }
-   
-    // 
-    // This is sample/test code directly from the Google Developers site.  It makes sure we
-    // have an object to safely manipulate.
-    //
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-                                .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                // The Map is verified. It is now safe to manipulate the map.
-
-            }
-        }
-    }
+    
     
     //
     // This is partially code from Nick Ferraro's lecture demonstration.
@@ -117,6 +117,7 @@ public class MainActivity extends Activity implements LocationListener, Listener
 		mLocManager.addGpsStatusListener(this);
 		mLocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
     }
+    
 
     //
     // This is partially code from Nick Ferraro's lecture demonstration.
@@ -133,15 +134,49 @@ public class MainActivity extends Activity implements LocationListener, Listener
 		mLocManager.removeGpsStatusListener(this);
 	}
     
+    
     @Override
     public void onDestroy() {
     	super.onDestroy();
+    	
+    	//
     	// Stop service - I believe stopService calls the onDestroy method in 
     	// TimerService, as this command here was not enough to keep the 
     	// service from continuing to run after the application was exited.
-        stopService(timerService); 
+    	//
+        stopService(mTimerService); 
         
     }
+    
+    
+    /**
+     * This is sample/test code directly from the Google Developers site.  It makes sure we
+     * have an object to safely manipulate.
+     * 
+     */
+    private void setUpMapIfNeeded() {
+    	
+    	//
+        // Check for null to confirm that we have not already instantiated the map.
+    	// If map doesn't exist, get the map.
+    	//
+        if (mMap == null) {
+            mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+                                .getMap();
+            
+            //
+            // Check to make sure we got the map fragment.
+            //
+            if (mMap != null) {
+            	
+            	//
+                // The Map is verified. It is now safe to manipulate the map.
+            	//
+            }
+        }
+    }
+    
+    
     
     @Override
 	public void onLocationChanged(Location location) {
@@ -151,35 +186,37 @@ public class MainActivity extends Activity implements LocationListener, Listener
     	//
     	mMap.clear();    	
     	
-    	for (Integer index = 0;index <3; ++index){    		
-    	
     	// 
     	// Build title from our current location.
     	//
-		mMarkerTitle = "Lat: "+ (location.getLatitude() + index) + " / Long: " + (location.getLongitude() + index);
+		mMarkerTitle = getString(R.string.latitude) + (location.getLatitude()) +
+					   getString(R.string.separator) +
+					   getString(R.string.longitude)  + (location.getLongitude());
 		
 		//
 		// Tell the marker where it's at (our location).
 		//
-		mMarker.position(new LatLng(location.getLatitude()+index, location.getLongitude()+index)).title(mMarkerTitle);
+		mMarker.position(new LatLng(location.getLatitude(), location.getLongitude())).title(mMarkerTitle);
 		
 		//
 		// Stick it on the map.
 		//
 		mMap.addMarker(mMarker);
-    	}
+    	
 		// 
 		// Move the map camera view to where the pin is and zoom it up a bit.
+		// TODO Add in settings 
 		//
 		mMap.animateCamera(CameraUpdateFactory
 						   .newLatLngZoom(new LatLng(location.getLatitude(),
 													 location.getLongitude()),
-   													 4));		
-		
-		
+   													 16));				
 		
 	}
-
+    
+    //
+    // GPS stubs that should be handled in a production application.
+    //
 	@Override
 	public void onGpsStatusChanged(int event) {
 		// TODO Auto-generated method stub
@@ -206,27 +243,44 @@ public class MainActivity extends Activity implements LocationListener, Listener
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
+		//
 		// Inflate the menu; this adds items to the action bar if it is present.
+		//
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 	
 	// 
 	// Menu stuff goes below.
-
+	//
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		//
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
+		//
 		switch (item.getItemId()) {
-
+		
+		//
+		// TODO Add in application settings for the user to be able to 
+		// set the timer interval.  Right now it's a placeholder activity
+		// that originally held toggle button exercises in my test code
+		// to make sure the activity actually bolted up properly.
+		//
 		case R.id.action_settings:
 			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
 
 		case R.id.action_takepicture:
-			
+			//
+			// I had to set up the intent to pass data from MainActivty's implementation of
+			// GPS listener because it's coupled too tightly to the MapFragment right now.
+			// TODO get MapFragment and LocationListener carved off into their own reusable
+			// objects.
+			//
 			Intent intent = new Intent("org.russell.cst407project.CURRENT_LOCATION");
 			String currentLoc = String.valueOf(mMarkerTitle);
 			intent.putExtra("currentlocation", currentLoc);
@@ -238,10 +292,7 @@ public class MainActivity extends Activity implements LocationListener, Listener
 			return true;
 
 		default:
-			return false;				
-				
-			}
-		
+			return false;
+		}
 	}
-
 }

@@ -8,7 +8,27 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-// some code reused from ravi tamada  http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
+
+/** 
+ * DatabaseHelper handles SQLite calls.
+ * <p>
+ * TODO Clean up and harden CRUD methods.  Some of this done already, but more to do.
+ * <br>
+ * TODO Separate out schema into abstract methods, maybe in the contract.  This would allow user
+ * modifiable annotation fields - note to self, study on dynamic data structure management.
+ * <br>
+ * TODO Review member variables - a lot of this seems awkward and/or fragile. 
+ * <br>
+ * TODO Compose proper JavaDocs for methods and fix inline documentation style consistency.
+ * <p>
+ * Some code reused from Ravi Tamada's online tutorial.
+ * https://plus.google.com/+RaviTamada/about
+ * 
+ * @author Russell Zauner
+ * @version 0.1 120814
+ *
+ */
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 	 
     // All Static variables
@@ -136,7 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
  
- 
+    //
     // Getting PhotoCaptionContracts Count
     // had to fix a bug in this where getting the count was 
     // closing via the getCount then trying to return a closed cursor
@@ -153,9 +173,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
     
+    //
     // had to extend the helper here to make it available to all activities
     // this doesn't do the job but makes it so we can't access the constructor
     // directly...
+    //
     private static DatabaseHelper sInstance;
     
     public static DatabaseHelper getInstance(Context context) {
@@ -163,9 +185,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	if (sInstance == null) {
     		sInstance = new DatabaseHelper (context.getApplicationContext());
     	}
-    	return sInstance;
-    	
-    }
-    
-    
+    	return sInstance;    	
+    }    
 }

@@ -1,16 +1,25 @@
 package org.russell.cst407project;
 
-//code reused from ravi tamada  http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
+/** 
+* PhotoCaptionContract contains methods for data set as well as 
+* retrieving its components.
+* 
+* @author Russell Zauner
+* @version 0.1 120814
+*
+*/
 
 public class PhotoCaptionContract {
     
-    //private variables
+    // private variables - DB seems to require some use of leading underscore
+	// for certain values, so I made them all underscores.
     int _id;
     String _location;
     String _image_path;
     String _caption;
-     
-    // Empty constructor
+ 
+    
+    // empty constructor
     public PhotoCaptionContract(){
          
     }

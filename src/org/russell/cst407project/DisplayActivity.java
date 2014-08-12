@@ -11,66 +11,83 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/** 
+* DisplayActivity handles loading up an entry from db into the current View.
+* <p>
+* TODO Clean up comments style consistency, as well as review placement
+* of member variables
+* <br>
+* TODO Add menu for various operations, including a ListView of current Table
+* 
+* 
+* @author Russell Zauner
+* @version 0.1 120814
+*
+*/
+
 public class DisplayActivity extends Activity {
 	
-	Uri fileUri = null;
-	ImageView savedImage = null;
-	TextView textSavedLocation = null;
-	TextView textSavedCaption = null;
-	Button getDataButton = null;
+	private ImageView msavedImage = null;
+	private TextView mtextSavedLocation = null;
+	private TextView mtextSavedCaption = null;
+	private Button mgetDataButton = null;
+	private Integer mLastEntry = null;
+	private String mLocation = null;
+	private String mImagePath = null; 
+	private String mCaption = null; 
 	
 	
-	  @Override
-	    protected void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);	        
-	        setContentView(R.layout.activity_display);
-	        
-	        savedImage = (ImageView) findViewById(R.id.saved_image);
-	        getDataButton = (Button) findViewById(R.id.button_getdata);
-	        textSavedLocation = (TextView) findViewById(R.id.saved_location);
-	        textSavedCaption = (TextView) findViewById(R.id.saved_textview);
-	        
-	        
-	        
-	        
-			getDataButton.setOnClickListener( new View.OnClickListener() {
-				public void onClick(View view) {
-					
-					dbLoaderTest();	
-					
-				}
-			});
-	  }
-	  
-	  
-	  public void dbLoaderTest (){
-		  DatabaseHelper db = DatabaseHelper.getInstance(this);
-		  
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_display);
 		
+		msavedImage = (ImageView) findViewById(R.id.saved_image);
+		mgetDataButton = (Button) findViewById(R.id.button_getdata);
+		mtextSavedLocation = (TextView) findViewById(R.id.saved_location);
+		mtextSavedCaption = (TextView) findViewById(R.id.saved_textview);
+		
+		mgetDataButton.setOnClickListener( new View.OnClickListener() {
+			public void onClick(View view) {
+				dbDataLoader();
+			}
+		});		
+	}	  
+	
+	/**
+	 * Performs db operation requested by user.
+	 * 
+	 */
+	public void dbDataLoader(){	
+		DatabaseHelper db = DatabaseHelper.getInstance(this);
 		Log.d("Retrieve: ", "Retrieving ..");
-		  
-		  // retrieve last db entry
-		  int lastEntry = db.getPhotoCaptionContractsCount();
-		  //adjust for index if not first one
-		  
-		  PhotoCaptionContract singleRow = db.getPhotoCaptionContract(lastEntry);
-		  String location = singleRow.getLocation();
-		  String imagePath = singleRow.getImagePath();
-		  String caption = singleRow.getCaption();
-		  // display the data
-		  displayData(location, imagePath, caption);
 		
-	  }
+		// retrieve last db entry
+		mLastEntry = db.getPhotoCaptionContractsCount();
+		
+		// Instantiates a data set object and calls the db for the last
+		// data set stored.
+		PhotoCaptionContract singleRow = db.getPhotoCaptionContract(mLastEntry);
+		mLocation = singleRow.getLocation();
+		mImagePath = singleRow.getImagePath();
+		mCaption = singleRow.getCaption();
 		  
+		// calls the single data set display method
+		displayData(mLocation, mImagePath, mCaption);
+	}
+	
+	/**
+	 * Populates View with single data set.
+	 * 
+	 * @param location - location associated with image
+	 * @param image_path - image path to image associated with location
+	 * @param caption - text data user stored with the image/location set
+	 * 
+	 */
 	  
-	  public void displayData (String location, String image_path, String caption){
-		  
-		  savedImage.setImageURI(Uri.parse(new File(image_path).toString()));
-		  textSavedLocation.setText(location.toString());
-		  textSavedCaption.setText(caption.toString());
-		  
-		  
-	  }
-
-	  
+	public void displayData (String location, String image_path, String caption){
+		msavedImage.setImageURI(Uri.parse(new File(image_path).toString()));
+		mtextSavedLocation.setText(location.toString());
+		mtextSavedCaption.setText(caption.toString());
+	}	  
 }

@@ -11,7 +11,6 @@ public class TextEditFragment extends Fragment{
 	@Override
 	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState){
 		View view = inflater.inflate(R.layout.fragment_textedit, container, false);
-		
 		return view;
 	}
 
