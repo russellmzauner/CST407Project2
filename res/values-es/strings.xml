@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Subtitular Mi Ubicación</string>    
+    <string name="action_settings">Ajustes</string>
+    <string name="action_takepicture">Tome Una Foto</string>
+    <string name="action_viewpicture">Ver Última Foto</string>
+    <string name="description">variará; imagen tomada de la cámara</string>
+    <string name="save_data">Guardar Datos</string>
+    <string name="get_photo">Obtener Foto</string>
+    <string name="get_data">Obtener Datos</string>
+    
+</resources>
